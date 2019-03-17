@@ -1,0 +1,34 @@
+{
+  "name": "hangman",
+  "version": "1.0.0",
+  "description": "A game of hangman",
+  "main": "server/start.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "build": "webpack -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jiheh/hangman.git"
+  },
+  "keywords": [
+    "hangman",
+    "game"
+  ],
+  "author": "Jiheh Ritterling",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jiheh/hangman/issues"
+  },
+  "homepage": "https://github.com/jiheh/hangman#readme",
+  "dependencies": {
+    "css-loader": "^2.1.1",
+    "express": "^4.16.4",
+    "pixi.js": "^5.0.0-rc.2",
+    "socket.io": "^2.2.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  }
+}
