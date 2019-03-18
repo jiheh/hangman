@@ -5,15 +5,36 @@ export default class GallowView extends PIXI.Container {
     super();
     this.game = game;
 
+    this.init();
     this.updateHangman();
   }
 
-  updateHangman() {
-    for (let i = this.children.length; i <= this.game.wrongGuessCount; i++) {
+  init() {
+    let positions = [
+      [650, 600],
+      [1000, 600],
+      [650, -25],
+      [650, 0],
+      [650, 0],
+      [1100, 0],
+      [1050, 150]
+    ];
+
+    for (let i = 0; i < this.game.MAX_WRONG_GUESS_COUNT; i++) {
       let sprite = PIXI.Sprite.fromImage(`/images/${i}.png`);
-      sprite.name = i;
-      sprite.position.set(200, 200)
+      sprite.visible = false;
+      sprite.position.set(positions[i][0], positions[i][1]);
       this.addChild(sprite);
+    }
+  }
+
+  reset() {
+    this.children.forEach(child => child.visible = false);
+  }
+
+  updateHangman() {
+    for (let i = 0; i < this.game.wrongGuessCount; i++) {
+      this.children[i].visible = true;
     }
   }
 }

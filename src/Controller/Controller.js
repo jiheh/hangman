@@ -15,7 +15,6 @@ export default class Controller {
     this.view.menu.startNewGameEvent.subscribe(this.startNewGame.bind(this));
 
     this.view.game.keyboard.makeGuessEvent.subscribe(this.makeGuess.bind(this));
-    // this.view.game.startNewGameEvent.subscribe(this.startNewGame.bind(this));
   }
 
   // The events trigger the Model to update

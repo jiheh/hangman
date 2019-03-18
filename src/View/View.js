@@ -3,14 +3,20 @@
 import * as PIXI from 'pixi.js';
 import GameView from './GameView.js';
 import MenuView from './MenuView.js';
+import ScoreView from './ScoreView.js';
 
 export default class View {
   constructor(model) {
     this.model = model;
 
-    this.pixiApp = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0x1099bb});
-    this.menu = new MenuView(model.menu);
+    this.pixiApp = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0xFDEBD0});
     this.game = new GameView(model.game);
+    this.menu = new MenuView(model.menu);
+    this.score = new ScoreView(model);
+
+    this.clickAudio = new Audio('/audio/click.mp3');
+    this.winAudio = new Audio('/audio/win.mp3');
+    this.loseAudio = new Audio('/audio/lose.mp3');
 
     this.setupSubscriptions();
     this.init();
@@ -26,41 +32,47 @@ export default class View {
     this.model.gameLostEvent.subscribe(this.updateGameLost.bind(this));
   }
 
+  // Functions to update the View when Model changes
   openInstructions() {
-    this.menu.openInstructions();
+    this.menu.openInstructions()
   }
 
   closeInstructions() {
-    this.menu.closeInstructions();
+    this.menu.closeInstructions()
   }
 
   resetGame() {
-    this.displayChildContainer(this.game);
+    this.game.reset();
+    this.score.visible = true;
+    this.game.visible = true;
+    this.menu.visible = false;
   }
 
   updateGuess() {
-    this.game.gallow.updateHangman();
-    this.game.keyboard.updateUsedKeys();
-    this.game.word.updateWordGuess();
+    this.clickAudio.play();
+    this.game.updateGuess();
   }
 
   updateGameWon() {
+    this.winAudio.play();
+    this.score.updateScore();
+    this.game.reset();
   }
 
   updateGameLost() {
+    this.loseAudio.play();
+    this.score.updateScore();
+    this.game.reset();
   }
 
-  // HELPER FUNCTIONS
   init() {
     document.body.appendChild(this.pixiApp.view);
-    this.displayChildContainer(this.menu);
-  }
 
-  displayChildContainer(child) {
-    this.pixiApp.stage.children = [];
+    this.pixiApp.stage.addChild(this.menu);
+    this.pixiApp.stage.addChild(this.score);
+    this.pixiApp.stage.addChild(this.game);
 
-    child.pivot.set(child.width / 2, child.height / 2);
-    child.position.set(window.innerWidth / 2, window.innerHeight / 2);
-    this.pixiApp.stage.addChild(child);
+    this.score.visible = false;
+    this.game.visible = false;
   }
 }

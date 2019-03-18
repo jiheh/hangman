@@ -21,4 +21,16 @@ export default class GameView extends PIXI.Container {
     this.addChild(this.keyboard);
     this.addChild(this.word);
   }
+
+  reset() {
+    this.gallow.reset();
+    this.keyboard.reset();
+    this.word.reset();
+  }
+
+  updateGuess() {
+    this.gallow.updateHangman();
+    this.keyboard.updateUsedKeys();
+    this.word.updateWordGuess();
+  }
 }

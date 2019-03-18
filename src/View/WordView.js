@@ -5,6 +5,7 @@ export default class WordView extends PIXI.Container {
     super();
     this.game = game;
 
+    this.setPosition();
     this.updateWordGuess();
   }
 
@@ -15,5 +16,14 @@ export default class WordView extends PIXI.Container {
       letterText.position.set((idx % this.game.guess.length) * 100, 50);
       this.addChild(letterText);
     });
+  }
+
+  reset() {
+    this.children = [];
+    this.updateWordGuess();
+  }
+
+  setPosition() {
+    this.position.set(50, 100);
   }
 }

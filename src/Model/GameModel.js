@@ -1,11 +1,13 @@
 'use strict';
 
+import * as RandomWords from 'random-words';
 import KeyboardModel from './KeyboardModel.js';
 
 export default class GameModel {
   constructor() {
     // Constants
     this.MAX_WRONG_GUESS_COUNT = 7;
+    this.MAX_WORD_LENGTH = 10;
 
     this.keyboard = new KeyboardModel();
 
@@ -22,7 +24,7 @@ export default class GameModel {
   reset() {
     this.keyboard.reset();
 
-    this.word = ('TesTwOrd').toUpperCase();; // TODO
+    this.word = RandomWords({exactly: 1, maxLength: this.MAX_WORD_LENGTH})[0].toUpperCase();
     this.letterIndices = this.wordToIndicesObj(this.word);
 
     this.guess = new Array(this.word.length).fill(null);

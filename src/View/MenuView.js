@@ -16,52 +16,51 @@ export default class MenuView extends PIXI.Container {
   }
 
   init() {
-    let startButton = this.createButton('Start Game', () => this.startNewGameEvent.publish());
-    let instructionsButton = this.createButton('Instructions', () => this.openInstructionsEvent.publish());
+    let startButton = this.createGraphic('startBtn','Start Game',() => this.startNewGameEvent.publish(),300, 100);
+    let instructionsButton = this.createGraphic('instBtn', 'Instructions', () => this.openInstructionsEvent.publish(), 300, 100);
 
-    instructionsButton.position.set(0, -100);
-    startButton.position.set(0, 100);
-    this.addChild(startButton);
-    this.addChild(instructionsButton);
+    this.render(startButton, 0, 100);
+    this.render(instructionsButton, 0, -100);
   }
 
   openInstructions() {
     if (this.menu.isInstructionsOpen && !this.getChildByName('instructions')) {
-      let instructions = new PIXI.Text(this.menu.instructions);
-      instructions.name = 'instructions';
-
-      this.addChild(instructions);
-
-      this.interactive = true;
-      this.on('pointerdown', () => this.closeInstructionsEvent.publish());
+      let instructions = this.createGraphic('instructions', this.menu.instructions, () => this.closeInstructionsEvent.publish(), 750, 500);
+      this.render(instructions, 0, 0);
     }
   }
 
   closeInstructions() {
     let instructions = this.getChildByName('instructions');
-    if (instructions) {
-      this.removeChild(instructions);
-      this.interactive = false;
-    }
+    if (instructions) this.removeChild(instructions);
   }
 
   // HELPER FUNCTIONS
-  createButton(text, event) {
-    let button = new PIXI.Graphics();
-    // button.name = text;
+  createGraphic(name, text, event, width, height) {
+    let graphic = new PIXI.Graphics();
+    graphic.name = name;
 
-    button.beginFill(0xFFFFFF);
-    button.drawRect(0, 0, 300, 100);
-    button.endFill();
+    graphic.beginFill(0xFFFFFF);
+    graphic.drawRect(0, 0, width, height);
+    graphic.endFill();
 
-    let buttonText = new PIXI.Text(text);
-    buttonText.anchor.set(0.5);
-    buttonText.position.set(150, 50);
-    button.addChild(buttonText)
+    let graphicText = new PIXI.Text(text);
+    graphicText.anchor.set(0.5);
+    graphicText.position.set(width / 2, height / 2);
+    graphic.addChild(graphicText);
 
-    button.interactive = true;
-    button.on('pointerdown', event);
+    graphic.interactive = true;
+    graphic.on('pointerdown', event);
 
-    return button;
+    return graphic;
+  }
+
+  render(graphic, offsetX, offsetY) {
+    let centerWidth = window.innerWidth / 2;
+    let centerHeight = window.innerHeight / 2;
+
+    graphic.pivot.set(graphic.width / 2, graphic.height / 2);
+    graphic.position.set(centerWidth + offsetX, centerHeight + offsetY);
+    this.addChild(graphic);
   }
 }

@@ -40,11 +40,13 @@ export default class Model {
   makeGuess(args) {
     this.game.makeGuess(args);
 
-    if (this.rightGuessCount >= this.game.word.length) {
+    if (this.game.rightGuessCount == this.game.word.length) {
       this.winCount++;
+      this.game.reset();
       this.gameWonEvent.publish();
-    } else if (this.game.wrongGuessCount >= this.game.MAX_WRONG_GUESS_COUNT) {
+    } else if (this.game.wrongGuessCount > this.game.MAX_WRONG_GUESS_COUNT) {
       this.lossCount++;
+      this.game.reset();
       this.gameLostEvent.publish();
     } else {
       this.guessMadeEvent.publish();
