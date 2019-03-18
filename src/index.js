@@ -1,9 +1,15 @@
 'use strict';
 
-import './style.css';
+import Model from './Model/Model.js';
+import View from './View/View.js';
+import Controller from './Controller/Controller.js';
 
-function test () {
-  console.log("HI JIHEH");
+class Application {
+  constructor() {
+    this.model = new Model();
+    this.view = new View(this.model);
+    this.controller = new Controller(this.model, this.view);
+  }
 }
 
-test();
+let app = new Application();
