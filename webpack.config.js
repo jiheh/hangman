@@ -10,17 +10,5 @@ module.exports = {
     filename: 'bundle.js',
     path: resolve(__dirname, 'public')
   },
-  mode: MODE,
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        exclude: [/node_modules/],
-        use: [
-          'style-loader',
-          'css-loader',
-        ]
-      }
-    ]
-  }
+  mode: MODE
 };
