@@ -25,7 +25,7 @@ export default class GameModel {
     this.word = ('TesTwOrd').toUpperCase();; // TODO
     this.letterIndices = this.wordToIndicesObj(this.word);
 
-    this.guess = new Array(this.word.length);
+    this.guess = new Array(this.word.length).fill(null);
     this.rightGuessCount = 0;
     this.wrongGuessCount = 0;
   }

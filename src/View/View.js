@@ -39,8 +39,9 @@ export default class View {
   }
 
   updateGuess() {
-    console.log(this.model)
+    this.game.gallow.updateHangman();
     this.game.keyboard.updateUsedKeys();
+    this.game.word.updateWordGuess();
   }
 
   updateGameWon() {

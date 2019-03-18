@@ -33,7 +33,7 @@ export default class MenuView extends PIXI.Container {
       this.addChild(instructions);
 
       this.interactive = true;
-      this.click = () => this.closeInstructionsEvent.publish();
+      this.on('pointerdown', () => this.closeInstructionsEvent.publish());
     }
   }
 
@@ -60,7 +60,7 @@ export default class MenuView extends PIXI.Container {
     button.addChild(buttonText)
 
     button.interactive = true;
-    button.click = event;
+    button.on('pointerdown', event);
 
     return button;
   }

@@ -1,22 +1,24 @@
 'use strict';
 
+import GallowView from './GallowView.js';
 import KeyboardView from './KeyboardView.js';
+import WordView from './WordView.js';
 
 export default class GameView extends PIXI.Container {
   constructor(game) {
     super();
     this.game = game;
-    this.keyboard = new KeyboardView(game.keyboard);
+
+    this.gallow = new GallowView(game);
+    this.keyboard = new KeyboardView(game);
+    this.word = new WordView(game);
 
     this.init();
   }
 
   init() {
+    this.addChild(this.gallow);
     this.addChild(this.keyboard);
-
-    // for (let i = 0; i < this.game.wrongGuessCount; i++) {
-    //   let texture = PIXI.Sprite.fromImage(`/images/${i}.png`);
-    //   this.addChild(texture);
-    // }
+    this.addChild(this.word);
   }
 }

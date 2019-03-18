@@ -3,10 +3,10 @@
 import GameEvent from '../GameEvent.js';
 
 export default class KeyboardView extends PIXI.Container {
-  constructor(keyboard) {
+  constructor(game) {
     super();
 
-    this.keyboard = keyboard;
+    this.keyboard = game.keyboard;
 
     // Events to notify the Controller of User Action in the KeyboardView
     this.makeGuessEvent = new GameEvent(this);
@@ -34,7 +34,7 @@ export default class KeyboardView extends PIXI.Container {
     button.name = letter;
 
     button.interactive = true;
-    button.click = () => this.makeGuessEvent.publish(letter);
+    button.on('pointerdown', () => this.makeGuessEvent.publish(letter));
     button.beginFill(0xFF2342);
     button.drawRect(0, 0, 100, 100);
     button.endFill();
